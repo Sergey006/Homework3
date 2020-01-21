@@ -24,14 +24,10 @@ public class TestClass {
             System.out.println();
 
             list.stream().
-                    map(Organisation::getSecurities).
-                    forEach(securities -> {
-                        securities.
-                                stream().
-                                filter(security -> security.getDateTo().isBefore(currentDate)).
-                                forEach(s-> System.out.println("Код:"+ s.getCode() + ", дата истечения: " + s.getDateTo() + ", название: " + s.getFullName()));
+                    flatMap(organisation -> organisation.getSecurities().stream()).
+                    filter(security -> security.getDateTo().isBefore(currentDate)).
+                    forEach(s -> System.out.println("Код:"+ s.getCode() + ", дата истечения: " + s.getDateTo() + ", название: " + s.getFullName()));
                         //TODO: Вывести название ценной бумаги или компании?
-                    });
             System.out.println();
 
             long count = list.stream().
